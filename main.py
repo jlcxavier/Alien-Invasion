@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Group
 from game_stats import GameStats
+from button import Button
 
 from settings import Settings
 from ship import Ship
@@ -18,6 +19,9 @@ def run_game():
     # definiu o nome da janela
     pygame.display.set_caption("Invasão Alienígena")
 
+    # Cria o botão play
+    play_button = Button(c_settings, screen, "Play")
+
     # Cria uma espaçonave
     ship = Ship(c_settings, screen)
     # Cria um grupo no qual serão armazenados os projéteis
@@ -28,19 +32,19 @@ def run_game():
     gf.create_fleet(c_settings, screen, ship, aliens)
 
     # Cria uma instância para armazenar dados estatísticos do jogo
-    stats = GameStats(c_settings)
+    stats = GameStats(c_settings)    
 
     # Inicia o laço principal do jogo
     while True:
 
-        gf.check_events(c_settings, screen, ship, bullets)
+        gf.check_events(c_settings, screen, stats, play_button, ship, aliens, bullets)
         if stats.game_active:
             ship.update()
             bullets.update()
             gf.update_bullets(c_settings, screen, ship, aliens, bullets)
             gf.update_aliens(c_settings, stats, screen,  ship, aliens, bullets)
-
-        gf.update_screen(c_settings, screen, ship, aliens, bullets)     
+    
+        gf.update_screen(c_settings, screen, stats, ship, aliens, bullets, play_button)     
 
 
 run_game()
