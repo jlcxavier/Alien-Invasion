@@ -9,9 +9,9 @@ from button import Button
 
 def check_keydown_events(event, c_settings, screen, ship, bullets):
 	"""Responde a pressionamentos de tecla."""
-	if event.key == pygame.K_RIGHT:
+	if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
 		ship.moving_right = True
-	elif event.key == pygame.K_LEFT:
+	elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
 		ship.moving_left = True
 	elif event.key == pygame.K_SPACE:
 		fire_bullet(c_settings, screen, ship, bullets)
@@ -27,9 +27,9 @@ def fire_bullet(c_settings, screen, ship, bullets):
 
 def check_keyup_events(event, ship):
 	"""Responde a solturas de tecla."""
-	if event.key == pygame.K_RIGHT:
+	if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
 		ship.moving_right = False
-	elif event.key == pygame.K_LEFT:
+	elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
 		ship.moving_left = False
 
 def check_events(c_settings, screen, stats, play_button, ship, aliens, bullets):
