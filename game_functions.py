@@ -16,7 +16,7 @@ def check_keydown_events(event, c_settings, screen, ship, bullets):
 	elif event.key == pygame.K_SPACE:
 		fire_bullet(c_settings, screen, ship, bullets)
 	elif event.key == pygame.K_q:
-		sys_exit()
+		sys.exit()
 
 def fire_bullet(c_settings, screen, ship, bullets):
 	"""Dispara um projétil se o limite ainda não foi alcançado."""
@@ -171,7 +171,7 @@ def change_fleet_direction(c_settings, aliens):
 
 def ship_hit(c_settings, stats, screen, ship, aliens, bullets):
 	"""Responde ao fato de a espaçonave ter sido atingida por um alienígena."""
-	if stats.ship_left > 0:
+	if stats.ships_left > 0:
 		# Decrementa ships_left
 		stats.ships_left -= 1
 
@@ -186,7 +186,7 @@ def ship_hit(c_settings, stats, screen, ship, aliens, bullets):
 		# Faz uma pausa
 		sleep(0.5)
 	else:
-		stats.game_active = false
+		stats.game_active = False
 		pygame.mouse.set_visible(True)
 
 def check_aliens_bottom(c_settings, stats, screen, ship, aliens, bullets):
