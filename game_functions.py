@@ -36,7 +36,7 @@ def check_keyup_events(event, ship):
         ship.moving_left = False
 
 
-def check_events(c_settings, screen, stats, play_button, ship, aliens, bullets):
+def check_events(c_settings, screen, stats, sb, play_button, ship, aliens, bullets):
     """ Responde a eventos de pressionamento de teclas e de mouse."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -47,20 +47,26 @@ def check_events(c_settings, screen, stats, play_button, ship, aliens, bullets):
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(c_settings, screen, stats, play_button, ship,
+            check_play_button(c_settings, screen, stats, sb, play_button, ship,
                               aliens, bullets,  mouse_x, mouse_y)
 
 
-def check_play_button(c_settings, screen, stats, play_button, ship,
+def check_play_button(c_settings, screen, stats, sb, play_button, ship,
                       aliens, bullets,  mouse_x, mouse_y):
     """Inicia um novo jogo quando o jogador clicar em Play."""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
         # Oculta o cursor do mouse
         pygame.mouse.set_visible(False)
+
         # Reinicia os dados estatísticos do jogo
         stats.reset_stats()
         stats.game_active = True
+
+        # Reinicia as imagens do painel de pontuação
+        sb.prep_score()
+        sb.prep_high_score()
+        sb.prep_level()
 
         # Esvazia a lista de alienígenas e de projéteis
         aliens.empty()
@@ -123,9 +129,14 @@ def check_bullet_alien_collisions(c_settings, screen, stats, sb, ship, aliens, b
         check_high_score(stats, sb)
 
     if len(aliens) == 0:
-        # Destrói os projéteis existentes e cria uma nova frota
+        # Se a frota toda for destruída, incia um novo nível
         bullets.empty()
         c_settings.increase_speed()
+
+        # Aumenta o nível
+        stats.level += 1
+        sb.prep_level()
+
         create_fleet(c_settings, screen, ship, aliens)
 
 
@@ -188,9 +199,6 @@ def ship_hit(c_settings, stats, screen, ship, aliens, bullets):
     if stats.ships_left > 0:
         # Decrementa ships_left
         stats.ships_left -= 1
-
-		# Reseta a pontuação para a próxima tentativa
-        stats.score = 0
 
         # Esvazia a lista de alienígenas e de projéteis
         aliens.empty()
