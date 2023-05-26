@@ -12,6 +12,25 @@ class Settings():
 
 		# Configurações da espaçonave
 		self.ship_limit = 3
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		quit teste
+		v
+		
 
 		# Configurações dos projéteis
 		self.bullet_width = 3
